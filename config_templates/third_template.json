@@ -1,0 +1,11 @@
+{
+  "@name": "Third template",
+  "@version": "173",
+  "MySQLCodeStyleSettings": {
+    "@version": "2",
+    "option": {
+      "@name": "SPACE_AFTER_COMMA",
+      "@value": "true"
+    }
+  }
+}
