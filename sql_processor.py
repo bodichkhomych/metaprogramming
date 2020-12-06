@@ -10,6 +10,7 @@ class SqlProcessor:
     option_space_after_separator = "false"
     option_space_after_comma = "true"
     option_collapse_statements = "false"
+    option_indent_lines_number = 2
 
     help_text = (
         "SQL code formating\n"
@@ -41,9 +42,11 @@ class SqlProcessor:
                 config = {
                     'coma': SqlProcessor.option_space_after_comma,
                     'collapse': SqlProcessor.option_collapse_statements,
-                    'separator': SqlProcessor.option_space_after_separator
+                    'separator': SqlProcessor.option_space_after_separator,
+                    'lines': SqlProcessor.option_indent_lines_number,
                 }
                 parser = sql_parser.Parser(sqlcode, config)
+                print('before run')
                 tokens = parser.run()
             except Exception as ex:
                 print("Exception received when formatting file={}, ex={}".format(file, ex))
@@ -58,7 +61,9 @@ class SqlProcessor:
             if action == '-b':
                 config = {
                     'coma': SqlProcessor.option_space_after_comma,
-                    'collapse': SqlProcessor.option_collapse_statements
+                    'collapse': SqlProcessor.option_collapse_statements,
+                    'separator': SqlProcessor.option_space_after_separator,
+                    'lines': SqlProcessor.option_indent_lines_number,
                 }
                 parser = sql_parser.Parser(sqlcode, config)
                 output = parser.format()
@@ -189,5 +194,9 @@ class SqlProcessor:
             if config_dict['MySQLCodeStyleSettings']['option']['@name'] == 'SPACE_AFTER_SEPARATOR':
                 SqlProcessor.option_space_after_separator = config_dict['MySQLCodeStyleSettings']['option']['@value']
                 print('set self.option_space_after_separator: ', SqlProcessor.option_space_after_separator)
+
+            if config_dict['MySQLCodeStyleSettings']['option']['@name'] == 'INDENT_LINES_NUMBER':
+                SqlProcessor.option_space_after_separator = config_dict['MySQLCodeStyleSettings']['option']['@value']
+                print('set self.option_space_after_separator: ', SqlProcessor.option_indent_lines_number)
 
 SqlProcessor.handle_parameters()
