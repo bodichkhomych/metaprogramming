@@ -7,6 +7,7 @@ class SqlProcessor:
     def __init__(self, *args, **kwargs):
         raise NotImplementedError("not need")
 
+    option_space_after_separator = "false"
     option_space_after_comma = "true"
     option_collapse_statements = "false"
 
@@ -39,7 +40,8 @@ class SqlProcessor:
 
                 config = {
                     'coma': SqlProcessor.option_space_after_comma,
-                    'collapse': SqlProcessor.option_collapse_statements
+                    'collapse': SqlProcessor.option_collapse_statements,
+                    'separator': SqlProcessor.option_space_after_separator
                 }
                 parser = sql_parser.Parser(sqlcode, config)
                 tokens = parser.run()
@@ -183,5 +185,9 @@ class SqlProcessor:
             if config_dict['MySQLCodeStyleSettings']['option']['@name'] == 'SPACE_AFTER_COMMA':
                 SqlProcessor.option_space_after_comma = config_dict['MySQLCodeStyleSettings']['option']['@value']
                 print('set self.option_space_after_comma: ', SqlProcessor.option_space_after_comma)
+
+            if config_dict['MySQLCodeStyleSettings']['option']['@name'] == 'SPACE_AFTER_SEPARATOR':
+                SqlProcessor.option_space_after_separator = config_dict['MySQLCodeStyleSettings']['option']['@value']
+                print('set self.option_space_after_separator: ', SqlProcessor.option_space_after_separator)
 
 SqlProcessor.handle_parameters()

@@ -154,10 +154,12 @@ class Parser:
     # string. It also initializes a token to keep track what token the lexer is
     # on """
     option_space_after_comma = "true"
+    option_space_after_separator = "false"
     option_collapse_statements = "false"
 
     def __init__(self, s, config):
         Parser.option_space_after_comma = config['coma']
+        Parser.option_space_after_separator = config['separator']
         Parser.option_collapse_statements = config['collapse']
 
         self.lexer = Lexer(s + "$")
@@ -341,7 +343,10 @@ class Parser:
         result = result + ' ' + val
 
         val = self.match_exact(SEPARATOR, ")")
-        result = result + ' ' + val
+        if Parser.option_space_after_separator == 'true':
+            result = result + ' ' + val
+        else:
+            result = result + val
 
         return result
 
