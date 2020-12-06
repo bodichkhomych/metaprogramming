@@ -18,3 +18,5 @@ f - file
 --beautify, -b - formats the input files
 
 --verify, -v - verifies the input files
+
+last release: added support of insert into 
