@@ -1,7 +1,7 @@
 SELECT Test1 , Test3 ,
 Test77 ,      ooolalalal
             FROM Gigabyte
-WHERE Test1 = 54326 AND Test3 = Test1 AND
+WHERE lalal22 =
+      alalalal3
 
 
-vasya = petia

@@ -1,0 +1,55 @@
+Ui. Function called:  handle_parameters
+path config_templates/second_template.json
+is file True
+set self.option_collapse_statements:  false
+Ui. Function called:  prepare_formatting_files
+going to process files:  ['input/code.sql']
+action:  -b
+Ui. Function called:  process_files
+<Query>
+	<Keyword>SELECT</Keyword>
+	<IdList>
+		<Id>Test1</Id>
+		<Comma>,</Comma>
+		<Id>Test3</Id>
+		<Comma>,</Comma>
+		<Id>Test77</Id>
+		<Comma>,</Comma>
+		<Id>ooolalalal</Id>
+	</IdList>
+	<Keyword>FROM</Keyword>
+	<IdList>
+		<Id>Gigabyte</Id>
+	</IdList>
+	<Keyword>WHERE</Keyword>
+	<CondList>
+		<Cond>
+			<Id>Test1</Id>
+			<Operator>=</Operator>
+			<Term>
+				<Int>54326</Int>
+			</Term>
+		</Cond>
+		<Keyword>AND</Keyword
+		<Cond>
+			<Id>Test3</Id>
+			<Operator>=</Operator>
+			<Term>
+				<Id>Test1</Id>
+			</Term>
+		</Cond>
+		<Keyword>AND</Keyword
+		<Cond>
+			<Id>vasya</Id>
+			<Operator>=</Operator>
+			<Term>
+				<Id>petia</Id>
+			</Term>
+		</Cond>
+	</CondList>
+</Query>
+real output
+SELECT Test1, Test3, Test77, ooolalalal
+FROM Gigabyte
+WHERE Test1 = 54326 AND Test3 = Test1 AND vasya = petia
+Processed 1 files successfully, 0 files with errors

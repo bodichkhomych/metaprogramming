@@ -74,7 +74,9 @@ class Lexer:
             and ID with the value. """
             if self.ch.isalpha():
                 id = self.consumeChars(LETTER + DIGIT)
-                if id == "SELECT" or id == "FROM" or id == "WHERE" or id == "AND":
+                if id == "INSERT" or id == "INTO" \
+                        or id == "VALUES" or id == "SELECT" \
+                        or id == "FROM" or id == "WHERE" or id == "AND":
                     return Token(KEYWORD, id)
                 return Token(ID, id)
                 # """ If the first char in the token is a digit, then it calls consumeChars
@@ -161,20 +163,65 @@ class Parser:
     # will result in a syntax error. """
 
     def query(self):
+        val = self.token.getTokenValue()
+
+        if val == "SELECT":
+            return self.query_select()
+
+        if val == "INSERT":
+            return self.query_insert()
+
+        self.error_exact(val)
+
+    def query_select(self):
         print("<Query>")
+
         val = self.match_exact(KEYWORD, "SELECT")
         print("\t<Keyword>" + val + "</Keyword>")
         self.IDList()
+
         val = self.match_exact(KEYWORD, "FROM")
         print("\t<Keyword>" + val + "</Keyword>")
         self.IDList()
+
         if self.token.getTokenType() != EOI:
             val = self.match_exact(KEYWORD, "WHERE")
             print("\t<Keyword>" + val + "</Keyword>")
             self.condList()
+
         print("</Query>")
 
+    def query_insert(self):
+        print("<Query>")
+
+        val = self.match_exact(KEYWORD, "INSERT")
+        print("\t<Keyword>" + val + "</Keyword>")
+        self.IDList()
+
+
+        val = self.match_exact(KEYWORD, "INTO")
+        print("\t<Keyword>" + val + "</Keyword>")
+        self.IDList()
+
+        val = self.match_exact(KEYWORD, "VALUES")
+        print("\t<Keyword>" + val + "</Keyword>")
+        self.IDList()
+
+        print("</Query>")
+
+
     def query_format(self):
+        val = self.token.getTokenValue()
+
+        if val == "SELECT":
+            return self.query_format_select()
+
+        if val == "INSERT":
+            return self.query_format_insert()
+
+        self.error_exact(val)
+
+    def query_format_select(self):
         # query
         val = self.match_exact(KEYWORD, "SELECT")
         result = val
@@ -200,6 +247,37 @@ class Parser:
             result = result + val
             condlist = self.condList_format()
             result = result + ' ' + condlist
+
+        return result
+
+    def query_format_insert(self):
+        # query
+        val = self.match_exact(KEYWORD, "INSERT")
+        result = val
+
+        idlist = self.IDList_format()
+        if Parser.option_collapse_statements == 'false':
+            result = result + ' ' + idlist + '\n'
+        else:
+            result = result + ' ' + idlist + ' '
+
+        val = self.match_exact(KEYWORD, "INTO")
+        result = result + val
+
+        idlist = self.IDList_format()
+        if Parser.option_collapse_statements == 'false':
+            result = result + ' ' + idlist + '\n'
+        else:
+            result = result + ' ' + idlist + ' '
+
+        val = self.match_exact(KEYWORD, "VALUES")
+        result = result + val
+
+        idlist = self.IDList_format()
+        if Parser.option_collapse_statements == 'false':
+            result = result + ' ' + idlist + '\n'
+        else:
+            result = result + ' ' + idlist + ' '
 
         return result
 
@@ -321,6 +399,10 @@ class Parser:
 
     def match_type(self, tp):
         val = self.token.getTokenValue()
+        print ('checking')
+        print (val)
+        print (tp)
+        print (self.token.getTokenType())
         if self.token.getTokenType() == tp:
             self.token = self.lexer.nextToken()
         else:
@@ -333,6 +415,7 @@ class Parser:
 
     def match_exact(self, tp, check):
         val = self.token.getTokenValue()
+
         if self.token.getTokenType() == tp:
             if val == check:
                 self.token = self.lexer.nextToken()

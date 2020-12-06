@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1a7c5e86-6bb6-4235-9fa4-9356d6cd9a44" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JupyterTrust" id="8efa8585-953c-4686-8260-0107a734dd95" />
+  <component name="ProjectId" id="1l2TwndPweM0QzqMUYpwti3TtL8" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/SQLparser/input" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.MySQL" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/SQLparser" />
+      <recent name="$PROJECT_DIR$/Test/subtest" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/SQLparser/input" />
+      <recent name="$PROJECT_DIR$/SQLparser/config_templates" />
+      <recent name="$PROJECT_DIR$/.idea/codeStyles" />
+      <recent name="$PROJECT_DIR$/SQLparser" />
+      <recent name="$PROJECT_DIR$/Lexer-Parser" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1a7c5e86-6bb6-4235-9fa4-9356d6cd9a44" name="Default Changelist" comment="" />
+      <created>1606794432826</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1606794432826</updated>
+      <workItem from="1606794436057" duration="7447000" />
+      <workItem from="1606804541769" duration="74000" />
+      <workItem from="1606804680695" duration="430000" />
+      <workItem from="1606879007240" duration="287000" />
+      <workItem from="1606879811341" duration="47989000" />
+      <workItem from="1607012240654" duration="986000" />
+      <workItem from="1607033600214" duration="5437000" />
+      <workItem from="1607234182111" duration="4265000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+      <path value="$PROJECT_DIR$/Lexer-Parser" />
+      <path value="$PROJECT_DIR$/TurkishExmpl" />
+      <path value="$PROJECT_DIR$/dbt-sql-formatter" />
+    </ignored-roots>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="359" y="242" key="#Notifications" timestamp="1606962661045">
+      <screen x="4" y="23" width="1276" height="777" />
+    </state>
+    <state x="359" y="242" key="#Notifications/4.23.1276.777@4.23.1276.777" timestamp="1606962661045" />
+    <state x="130" y="23" key="#Project_Structure" timestamp="1606879758950">
+      <screen x="4" y="23" width="1276" height="777" />
+    </state>
+    <state x="130" y="23" key="#Project_Structure/4.23.1276.777@4.23.1276.777" timestamp="1606879758950" />
+    <state x="34" y="248" key="#SQL_Dialects" timestamp="1606962879759">
+      <screen x="4" y="23" width="1276" height="777" />
+    </state>
+    <state x="34" y="248" key="#SQL_Dialects/4.23.1276.777@4.23.1276.777" timestamp="1606962879759" />
+    <state x="242" y="77" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606962896426">
+      <screen x="4" y="23" width="1276" height="777" />
+    </state>
+    <state x="242" y="77" key="#com.intellij.execution.impl.EditConfigurationsDialog/4.23.1276.777@4.23.1276.777" timestamp="1606962896426" />
+    <state x="270" y="93" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog" timestamp="1606798029176">
+      <screen x="4" y="23" width="1276" height="777" />
+    </state>
+    <state x="270" y="93" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog/4.23.1276.777@4.23.1276.777" timestamp="1606798029176" />
+    <state x="390" y="263" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1606898414166">
+      <screen x="4" y="23" width="1276" height="777" />
+    </state>
+    <state x="390" y="263" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/4.23.1276.777@4.23.1276.777" timestamp="1606898414166" />
+    <state x="151" y="50" key="SettingsEditor" timestamp="1606969118193">
+      <screen x="4" y="23" width="1276" height="777" />
+    </state>
+    <state x="151" y="50" key="SettingsEditor/4.23.1276.777@4.23.1276.777" timestamp="1606969118193" />
+    <state x="104" y="123" width="1076" height="577" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1607064113567">
+      <screen x="4" y="23" width="1276" height="777" />
+    </state>
+    <state x="104" y="123" width="1076" height="577" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/4.23.1276.777@4.23.1276.777" timestamp="1607064113567" />
+    <state x="114" y="143" width="1056" height="537" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1606968311711">
+      <screen x="4" y="23" width="1276" height="777" />
+    </state>
+    <state x="114" y="143" width="1056" height="537" key="com.intellij.history.integration.ui.views.FileHistoryDialog/4.23.1276.777@4.23.1276.777" timestamp="1606968311711" />
+    <state x="256" y="35" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1606929384644">
+      <screen x="4" y="23" width="1276" height="777" />
+    </state>
+    <state x="256" y="35" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/4.23.1276.777@4.23.1276.777" timestamp="1606929384644" />
+    <state x="0" y="23" width="598" height="777" key="find.popup" timestamp="1606886322847">
+      <screen x="4" y="23" width="1276" height="777" />
+    </state>
+    <state x="0" y="23" width="598" height="777" key="find.popup/4.23.1276.777@4.23.1276.777" timestamp="1606886322847" />
+    <state x="36" y="34" key="new project wizard" timestamp="1606794988581">
+      <screen x="4" y="23" width="1276" height="777" />
+    </state>
+    <state x="36" y="34" key="new project wizard/4.23.1276.777@4.23.1276.777" timestamp="1606794988581" />
+    <state x="307" y="186" key="run.anything.popup" timestamp="1606880836449">
+      <screen x="4" y="23" width="1276" height="777" />
+    </state>
+    <state x="307" y="186" key="run.anything.popup/4.23.1276.777@4.23.1276.777" timestamp="1606880836449" />
+    <state x="307" y="124" key="search.everywhere.popup" timestamp="1606798024704">
+      <screen x="4" y="23" width="1276" height="777" />
+    </state>
+    <state x="307" y="124" key="search.everywhere.popup/4.23.1276.777@4.23.1276.777" timestamp="1606798024704" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
