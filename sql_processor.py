@@ -64,7 +64,7 @@ class SqlProcessor:
                 print('real output')
                 print(output)
 
-                result_file = os.path.join(head, 'formatted_' + tail)
+                result_file = os.path.join(head, '' + tail)
                 with open(result_file, "w", encoding='utf-8') as fout:
                     fout.write(output)
             # else:
