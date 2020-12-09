@@ -1,8 +1,6 @@
 import sys
 
-INT = 1
-FLOAT = 2
-ID = 3
+ID = 2
 KEYWORD = 4
 OPERATOR = 5
 COMMA = 6
@@ -11,16 +9,12 @@ INVALID = 8
 TYPE_DEFINITION = 9
 SEPARATOR = 10
 
-LETTER = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+LETTER = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-*"
 DIGIT = "0123456789"
 
 def typeToString(tp):
-    if tp == INT:
-        return "Int"
-    elif tp == FLOAT:
-        return "Float"
-    elif tp == ID:
-        return "ID"
+    if tp == ID:
+        return "id"
     elif tp == KEYWORD:
         return "Keyword"
     elif tp == OPERATOR:
@@ -80,13 +74,14 @@ class Lexer:
             and ID with the value. """
             if self.ch.isalpha():
                 id = self.consumeChars(LETTER + DIGIT)
-                if id == "INSERT" or id == "INTO" \
-                        or id == "VALUES" or id == "SELECT" \
-                        or id == "FROM" or id == "WHERE" \
-                        or id == "AND" or id == "CREATE" or id == "TABLE":
+                if id.upper() == "INSERT" or id.upper() == "INTO" \
+                        or id.upper() == "VALUES" or id.upper() == "SELECT" \
+                        or id.upper() == "FROM" or id.upper() == "WHERE" \
+                        or id.upper() == "AND" or id.upper() == "CREATE" \
+                        or id.upper() == "TABLE":
                     return Token(KEYWORD, id)
-                if id == "INT" or id == "FLOAT" \
-                        or id == "STRING" or id == "DATE":
+                if id.upper() == "INT" or id.upper() == "FLOAT" \
+                        or id.upper() == "STRING" or id.upper() == "DATE":
                     return Token(TYPE_DEFINITION, id)
                 return Token(ID, id)
 
@@ -99,12 +94,12 @@ class Lexer:
             elif self.ch.isdigit():
                 num = self.consumeChars(DIGIT)
                 if self.ch != ".":
-                    return Token(INT, num)
+                    return Token(ID, num)
                 num += self.ch
                 self.nextChar()
                 if self.ch.isdigit():
                     num += self.consumeChars(DIGIT)
-                    return Token(FLOAT, num)
+                    return Token(ID, num)
                 else:
                     return Token(INVALID, num)
             #     """ These last few if statements just check if the chars are white spaces,
@@ -154,11 +149,15 @@ class Parser:
     # string. It also initializes a token to keep track what token the lexer is
     # on """
     option_space_after_comma = "true"
+    option_space_after_separator = "false"
     option_collapse_statements = "false"
+    option_indent_lines_number = 2
 
     def __init__(self, s, config):
         Parser.option_space_after_comma = config['coma']
+        Parser.option_space_after_separator = config['separator']
         Parser.option_collapse_statements = config['collapse']
+        Parser.option_indent_lines_number = config['lines']
 
         self.lexer = Lexer(s + "$")
         self.token = self.lexer.nextToken()
@@ -178,18 +177,23 @@ class Parser:
     # will result in a syntax error. """
 
     def query(self):
-        val = self.token.getTokenValue()
+        result = ''
+        while self.token.getTokenType() != EOI:
+            val = self.token.getTokenValue()
 
-        if val == "SELECT":
-            return self.query_select()
+            if val == "SELECT":
+                self.query_select()
 
-        if val == "INSERT":
-            return self.query_insert()
+            if val == "INSERT":
+                self.query_insert()
 
-        if val == "CREATE":
-            return self.query_create()
+            if val == "CREATE":
+                self.query_create()
 
-        self.error_exact(val)
+            for i in range(Parser.option_indent_lines_number+1):
+                print("\n")
+
+        return result
 
     def query_select(self):
         print("<Query>")
@@ -207,6 +211,9 @@ class Parser:
             print("\t<Keyword>" + val + "</Keyword>")
             self.condList()
 
+        val = self.match_exact(SEPARATOR, ";")
+        print("<Separator>" + val + "</Separator>")
+
         print("</Query>")
 
     def query_insert(self):
@@ -214,16 +221,37 @@ class Parser:
 
         val = self.match_exact(KEYWORD, "INSERT")
         print("\t<Keyword>" + val + "</Keyword>")
-        self.IDList()
-
+        
 
         val = self.match_exact(KEYWORD, "INTO")
         print("\t<Keyword>" + val + "</Keyword>")
-        self.IDList()
+
+        self.ID()
+
+        if self.token.getTokenValue() == '(':
+            val = self.match_exact(SEPARATOR, "(")
+            print("<Separator>" + val + "</Separator>")
+
+            self.IDList()
+
+            val = self.match_exact(SEPARATOR, ")")
+            print("<Separator>" + val + "</Separator>")
 
         val = self.match_exact(KEYWORD, "VALUES")
         print("\t<Keyword>" + val + "</Keyword>")
-        self.IDList()
+
+        while self.token.getTokenValue() != ";":
+            val = self.match_exact(SEPARATOR, "(")
+            print("<Separator>" + val + "</Separator>")
+            self.IDList()
+            val = self.match_exact(SEPARATOR, ")")
+            print("<Separator>" + val + "</Separator>")
+
+            if self.token.getTokenValue() == ',':
+                val = self.match_exact(COMMA, ",")
+
+        val = self.match_exact(SEPARATOR, ";")
+        print("<Separator>" + val + "</Separator>")
 
         print("</Query>")
 
@@ -247,22 +275,31 @@ class Parser:
         val = self.match_exact(SEPARATOR, ")")
         print("<Separator>" + val + "</Separator>")
 
+        val = self.match_exact(SEPARATOR, ";")
+        print("<Separator>" + val + "</Separator>")
+
         print("</Query>")
 
 
     def query_format(self):
-        val = self.token.getTokenValue()
 
-        if val == "SELECT":
-            return self.query_format_select()
+        result = ''
+        while self.token.getTokenType() != EOI:
+            val = self.token.getTokenValue()
 
-        if val == "INSERT":
-            return self.query_format_insert()
+            if val == "SELECT":
+                result = result + self.query_format_select()
 
-        if val == "CREATE":
-            return self.query_format_create()
+            if val == "INSERT":
+                result = result + self.query_format_insert()
 
-        self.error_exact(val)
+            if val == "CREATE":
+                result = result + self.query_format_create()
+
+            for i in range(Parser.option_indent_lines_number+1):
+                result = result + "\n"
+
+        return result
 
     def query_format_select(self):
         # query
@@ -291,36 +328,49 @@ class Parser:
             condlist = self.condList_format()
             result = result + ' ' + condlist
 
+        val = self.match_exact(SEPARATOR, ";")
+        result = result + val
+
         return result
 
     def query_format_insert(self):
-        # query
-        val = self.match_exact(KEYWORD, "INSERT")
-        result = val
+        result = self.match_exact(KEYWORD, "INSERT")
 
-        idlist = self.IDList_format()
-        if Parser.option_collapse_statements == 'false':
-            result = result + ' ' + idlist + '\n'
-        else:
-            result = result + ' ' + idlist + ' '
+        result += ' ' + self.match_exact(KEYWORD, "INTO")
 
-        val = self.match_exact(KEYWORD, "INTO")
-        result = result + val
+        val = self.ID_format()
+        result = result + ' ' + val
 
-        idlist = self.IDList_format()
-        if Parser.option_collapse_statements == 'false':
-            result = result + ' ' + idlist + '\n'
-        else:
-            result = result + ' ' + idlist + ' '
+        val = self.match_exact(SEPARATOR, "(")
+        result = result + ' ' + val
+
+        val = self.IDList_format()
+        result = result + ' ' + val
+
+        val = self.match_exact(SEPARATOR, ")")
+        result = result + ' ' + val
 
         val = self.match_exact(KEYWORD, "VALUES")
-        result = result + val
+        result = result + ' ' + val
 
-        idlist = self.IDList_format()
-        if Parser.option_collapse_statements == 'false':
-            result = result + ' ' + idlist + '\n'
-        else:
-            result = result + ' ' + idlist + ' '
+        while self.token.getTokenValue() != ";":
+            val = self.match_exact(SEPARATOR, "(")
+            result = result + ' ' + val
+
+            val = self.IDList_format()
+            result = result + ' ' + val
+
+            val = self.match_exact(SEPARATOR, ")")
+            result = result + ' ' + val
+
+            if self.token.getTokenValue() == ',':
+                val = self.match_exact(COMMA, ",")
+                result = result + ' ' + val
+            else:
+                break
+
+        val = self.match_exact(SEPARATOR, ";")
+        result = result + ' ' + val
 
         return result
 
@@ -335,15 +385,33 @@ class Parser:
         result = result + ' ' + val
 
         val = self.match_exact(SEPARATOR, "(")
-        result = result + ' ' + val
+        if Parser.option_space_after_separator == 'true':
+            result = result + ' ' + val + ' '
+        else:
+            result = result + ' ' + val
 
         val = self.DefineIDList_format()
-        result = result + ' ' + val
+        result = result + val
 
         val = self.match_exact(SEPARATOR, ")")
-        result = result + ' ' + val
+        if Parser.option_space_after_separator == 'true':
+            result = result + ' ' + val
+        else:
+            result = result + val
+
+        val = self.match_exact(SEPARATOR, ";")
+        result = result + val
 
         return result
+
+
+    def ID(self):
+        val = self.match_type(ID)
+        print("\t\t<Id>" + val + "</Id>")
+
+    def ID_format(self):
+        val = self.match_type(ID)
+        return val
 
     #    """ IDList checks and builds the IDList output, making sure the input string 
     # follows: <id> {, <id>}. Any deviation from this will result in a syntax error. """
@@ -355,7 +423,8 @@ class Parser:
 
         """ This while loop deals with the optional reapeating part of IDList, making sure
         that, if there are input values, they are correct and in the correct order """
-        while self.token.getTokenType() != KEYWORD and self.token.getTokenType() != EOI:
+        while self.token.getTokenType() != KEYWORD and self.token.getTokenValue() != ")" \
+                and self.token.getTokenType() != EOI and self.token.getTokenValue() != ";":
             print("\t\t<Comma>" + self.match_type(COMMA) + "</Comma>")
             print("\t\t<Id>" + self.match_type(ID) + "</Id>")
         print("\t</IdList>")
@@ -366,13 +435,18 @@ class Parser:
 
         """ This while loop deals with the optional reapeating part of IDList, making sure
         that, if there are input values, they are correct and in the correct order """
-        while self.token.getTokenType() != KEYWORD and self.token.getTokenType() != EOI:
+        while self.token.getTokenType() != KEYWORD and self.token.getTokenValue() != ")"\
+                and self.token.getTokenType() != EOI and self.token.getTokenValue() != ";":
             result = result + self.match_type(COMMA)
             if Parser.option_space_after_comma == 'true':
                 result = result + ' ' + self.match_type(ID)
             else:
                 result = result + self.match_type(ID)
         return result
+
+    def ID_format(self):
+        val = self.match_type(ID)
+        return val
 
     def DefineIDList(self):
         print("\t<IdList>")
@@ -413,6 +487,19 @@ class Parser:
             result = result + ' ' + self.match_type(ID)
         return result
 
+    def ValuesList(self):
+        print("\t<IdList>")
+        val = self.match_type(ID)
+        print("\t\t<Id>" + val + "</Id>")
+
+        """ This while loop deals with the optional reapeating part of IDList, making sure
+        that, if there are input values, they are correct and in the correct order """
+        while self.token.getTokenType() != KEYWORD and self.token.getTokenValue() != ")" \
+                and self.token.getTokenType() != EOI and self.token.getTokenValue() != ";":
+            print("\t\t<Comma>" + self.match_type(COMMA) + "</Comma>")
+            print("\t\t<Id>" + self.match_type(ID) + "</Id>")
+        print("\t</IdList>")
+
     # """ CondList checks and builds the CondList output, making sure the input 
     # string follows: <Cond> {AND <Cond>}. Any deviation from this will result 
     # in a syntax error. """
@@ -422,7 +509,7 @@ class Parser:
         self.cond()
         """ This while loop deals with the optional reapeating part of CondList, making sure
         that, if there are input values, they are correct and in the correct order """
-        while self.token.getTokenType() != EOI:
+        while self.token.getTokenType() != EOI and self.token.getTokenValue() != ";":
             print("\t\t<Keyword>" + self.match_exact(KEYWORD, "AND") + "</Keyword")
             self.cond()
         print("\t</CondList>")
@@ -433,7 +520,7 @@ class Parser:
 
         """ This while loop deals with the optional reapeating part of CondList, making sure
         that, if there are input values, they are correct and in the correct order """
-        while self.token.getTokenType() != EOI:
+        while self.token.getTokenType() != EOI and self.token.getTokenValue() != ";":
             result = result + ' ' + self.match_exact(KEYWORD, "AND")
             cond = self.cond_format()
             result = result + ' ' + cond
@@ -472,10 +559,6 @@ class Parser:
         val = self.token.getTokenValue()
         if token == ID:
             print("\t\t\t\t<Id>" + val + "</Id>")
-        elif token == INT:
-            print("\t\t\t\t<Int>" + val + "</Int>")
-        elif token == FLOAT:
-            print("\t\t\t\t<Float>" + val + "</Float>")
         else:
             self.error_type(token)
         self.token = self.lexer.nextToken()
@@ -487,10 +570,6 @@ class Parser:
         result = ''
         if token == ID:
             result = result + val
-        elif token == INT:
-            result = result + val
-        elif token == FLOAT:
-            result = result + val
         else:
             self.error_type(token)
         self.token = self.lexer.nextToken()
@@ -501,6 +580,7 @@ class Parser:
     # do match it just moves to the next token, if not it calls the error_type. """
 
     def match_type(self, tp):
+        print('match_exact: ', tp, ' value: ', self.token.getTokenValue())
         val = self.token.getTokenValue()
         if self.token.getTokenType() == tp:
             self.token = self.lexer.nextToken()
@@ -513,7 +593,11 @@ class Parser:
     # fails either case, it calls one of the error methods. """
 
     def match_exact(self, tp, check):
+        print('match_exact: ', tp, ' check: ', check, ' value: ', self.token.getTokenValue())
         val = self.token.getTokenValue()
+
+        if (tp == KEYWORD):
+            val = val.upper()
 
         if self.token.getTokenType() == tp:
             if val == check:
@@ -528,11 +612,11 @@ class Parser:
     # error statement and then kills the program. """
 
     def error_type(self, tp):
-        print("Syntax error: expecting: "
+        print("Syntax error (type): expecting: "
               + typeToString(tp)
-              + "; saw type: "
+              + " ||| saw type: "
               + typeToString(self.token.getTokenType())
-              + "; value: "
+              + " ||| value: "
               + self.token.getTokenValue())
         sys.exit(1)
 
@@ -540,10 +624,10 @@ class Parser:
     # error statement and then kills the program. """
 
     def error_exact(self, check):
-        print("Syntax error: expecting: "
-              + typeToString(tp)
-              + "; saw type: "
+        print("Syntax error (value): expecting: "
+              + check
+              + " ||| saw type: "
               + typeToString(self.token.getTokenType())
-              + "; value: "
+              + " ||| value: "
               + self.token.getTokenValue())
         sys.exit(1)

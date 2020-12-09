@@ -1,0 +1,11 @@
+{
+  "@name": "Second template",
+  "@version": "173",
+  "MySQLCodeStyleSettings": {
+    "@version": "2",
+    "option": {
+      "@name": "SPACE_AFTER_SEPARATOR",
+      "@value": "true"
+    }
+  }
+}
