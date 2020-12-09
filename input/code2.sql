@@ -1,14 +1,5 @@
-INSERT Test1, Test3, Test77, ooolalalal
-INTO Gigabyte
-VALUES lalal22, alalalal3;
-
-
-
-CREATE TABLE Test1 ( INT id,STRING digigits,FLOAT numb );
-
-
-SELECT Test1, Test3, Test77, ooolalalal
-FROM Gigabyte
-WHERE lalal22 = alalalal3;
-
-
+INSERT
+into my_wide_table
+values (get_last_id(),
+        complex_expression_1 + complex_expression_2,
+        long_expression_1 * long_expression_2 - long_expression_3);
